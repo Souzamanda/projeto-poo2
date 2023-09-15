@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Scanner entrada = new Scanner(System.in);
         CadastroPessoaFisica cadastroPessoa = new CadastroPessoaFisica();
         CadastroPessoaJuridica cadastroEmpresa = new CadastroPessoaJuridica();
         AluguelVeiculosRepositorio aluguelVeiculos = new AluguelVeiculosRepositorio();
@@ -14,13 +13,13 @@ public class Main {
         int opcao;
         do {
             menu.exibirMenuInicial();
-            opcao = entrada.nextInt();
+            opcao = Integer.parseInt(CapturadorDeEntrada.nextLine());
             switch (opcao) {
                 case 1:
                     boolean resultadoCadastro;
                     menu.exibirMenuCadastroPessoa();
-                    opcao = entrada.nextInt();
-                    if (opcao == 1){
+                    int opcaoCadastro = Integer.parseInt(CapturadorDeEntrada.nextLine());
+                    if (opcaoCadastro == 1){
                             resultadoCadastro = menu.cadastroPessoaFisica(cadastroPessoa);
                             if (resultadoCadastro) {
                                 System.out.println("Cadastro realizado com sucesso!\n");
@@ -29,7 +28,7 @@ public class Main {
                                 System.out.println("Cpf existente na base\n");
                             }
 
-                    }else if (opcao == 2){
+                    }else if (opcaoCadastro == 2){
                         resultadoCadastro = menu.cadastroPessoaJuridica(cadastroEmpresa);
                         if (resultadoCadastro) {
                             System.out.println("Cadastro realizado com sucesso!\n");
@@ -45,15 +44,15 @@ public class Main {
                 case 2:
 
                     menu.exibirMenuCadastroPessoa();
-                    opcao = entrada.nextInt();
-                        if (opcao == 1){
+                    int opcaoModificacao = Integer.parseInt(CapturadorDeEntrada.nextLine());
+                        if (opcaoModificacao == 1){
                             alterado = menu.alteracaoPessoaFisica(cadastroPessoa);
                             if (alterado) {
                                 System.out.println("Cadastro atualizado com sucesso!\n");
                                 PessoaFisicaRepositorio.listarPessoas();
                             }
 
-                    } else if (opcao == 2) {
+                    } else if (opcaoModificacao == 2) {
                             alterado = menu.alteracaoPessoaJuridica(cadastroEmpresa);
                             if (alterado) {
                                 System.out.println("Cadastro atualizado com sucesso!\n");

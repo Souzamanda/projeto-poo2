@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit;
 public class DevolucaoVeiculo {
     AluguelVeiculos aluguelParaFinalizar;
     LocalDateTime dataDevolucao;
-    Vehicle veiculoAlugado = (Vehicle) aluguelParaFinalizar.veiculo;
+    Vehicle veiculoAlugado = aluguelParaFinalizar.veiculo;
     LocalDateTime dataAluguel = aluguelParaFinalizar.getDataDoAluguel();
 
     public AluguelVeiculos getAluguelParaFinalizar() {
@@ -31,7 +31,7 @@ public class DevolucaoVeiculo {
         this.dataDevolucao = dataDevolucao;
     }
 
-    public String calculoPagamento(String tipoDePessoa) {
+    public void calculoPagamento(String tipoDePessoa) {
         double precoDiaria = veiculoAlugado.getPrecoDiaria();
         long diarias = ChronoUnit.DAYS.between(dataAluguel, dataDevolucao);
         double desconto = 0;
@@ -47,8 +47,8 @@ public class DevolucaoVeiculo {
             total = total - (total * desconto);
         }
 
-        return "O total de " + diarias + " por R$" + precoDiaria +
-                " cada, fica em: R$" + total;
+        System.out.println("O total de " + diarias + " por R$" + precoDiaria +
+                " cada, fica em: R$" + total);
     }
 
     @Override

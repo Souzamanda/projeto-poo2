@@ -14,6 +14,8 @@ public class Menu <T> {
     LocalDate dataDeNascimento;
     boolean retorno;
 
+
+
     public void exibirMenuInicial() {
         System.out.println("0 - Encerrar programa");
         System.out.println("1 - Cadastrar pessoa ou empresa");
@@ -32,32 +34,29 @@ public class Menu <T> {
 
     public void cadastroVeiculo() throws Exception {
         VehicleService vehicleService = new VehicleService(VehicleRepository.getVehicleRepository());
-        Scanner entrada = new Scanner(System.in);
         System.out.println("Cadastrar veículo no sistema");
         System.out.println("Qual o nome do veiculo?");
-        String nome = entrada.nextLine();
+        String nome = CapturadorDeEntrada.nextLine();
         System.out.println("Qual a placa do veiculo?");
-        String placa = entrada.nextLine();
+        String placa = CapturadorDeEntrada.nextLine();
         System.out.println("Qual o tamanho do veiculo? (Pequeno, medio, SUV)");
-        Tamanho tamanho = Tamanho.valueOf(entrada.nextLine().toUpperCase().trim());
+        Tamanho tamanho = Tamanho.valueOf(CapturadorDeEntrada.nextLine().toUpperCase().trim());
 
         vehicleService.RegisterVehicle(nome, placa, tamanho);
 
         System.out.println("Veiculo cadastrado");
-
     }
 
     public boolean formularioAluguelVeiculo(CadastroAluguel aluguel) {
         VehicleService vehicleService = new VehicleService(VehicleRepository.getVehicleRepository());
-        Scanner entrada = new Scanner(System.in);
         PessoaFisica pessoaFisica = null;
         PessoaJuridica pessoaJuridica = null;
         List<Vehicle> veiculos = new ArrayList<>();
         String nomeDoCarro, local;
         System.out.println("Digite o id da locação:");
-        int idLocacao = entrada.nextInt();
+        int idLocacao = Integer.parseInt(CapturadorDeEntrada.nextLine());
         System.out.println("Digite seu CPF ou CNPJ (Somente números)");
-        cpfOuCnpj = entrada.next();
+        cpfOuCnpj = CapturadorDeEntrada.nextLine();
         if (Pessoa.VerificarPessoa(cpfOuCnpj)) {
             CadastroPessoaFisica cadastroPessoaFisica = new CadastroPessoaFisica();
             if (cadastroPessoaFisica.consultarSeCpfExiste(cpf)) {
@@ -79,12 +78,12 @@ public class Menu <T> {
 
         }
         System.out.println("Digite o nome do carro desejado: ");
-        nomeDoCarro = entrada.next();
+        nomeDoCarro = CapturadorDeEntrada.nextLine();
         veiculos = vehicleService.veiculosDisponiveisPeloNome(nomeDoCarro);
         Vehicle veiculo = veiculos.get(0);
 
         System.out.println("Digite o Local de retirada do veículo: ");
-        local = entrada.next();
+        local = CapturadorDeEntrada.nextLine();
         LocalDateTime dataHora = TransformarDataDeAluguel();
         if (pessoaJuridica != null){
             retorno = aluguel.alugarVeiculo(idLocacao,pessoaJuridica,veiculo,dataHora,local);
@@ -100,14 +99,13 @@ public class Menu <T> {
 
     }
 
-    public boolean devolucaoDeVeiculo(CadastroAluguel cadastroAluguel) {
-        Scanner entrada = new Scanner(System.in);
+    public void devolucaoDeVeiculo(CadastroAluguel cadastroAluguel) {
         System.out.println("Digite o id da locação do veículo");
-        int id = entrada.nextInt();
+        int id = Integer.parseInt(CapturadorDeEntrada.nextLine());
         if(cadastroAluguel.consultarLocacaoExiste(id)) {
             AluguelVeiculos aluguelParaFinalizar = cadastroAluguel.consultarLocacao(id);
             System.out.println("Digite 'fisica' para Pessoa Fisica ou 'juridida' para Pessoa Juridica");
-            String tipoDePessoa = entrada.next();
+            String tipoDePessoa = CapturadorDeEntrada.nextLine();
             LocalDateTime dataDevolucao = TransformarDataDeAluguel();
 
 
@@ -115,25 +113,20 @@ public class Menu <T> {
             System.out.println(devolucaoVeiculo);
 
             devolucaoVeiculo.calculoPagamento(tipoDePessoa);
-
-            return true;
         } else {
             System.out.println("Locação não encontrada");
         }
-        return false;
     }
 
     public boolean cadastroPessoaFisica(CadastroPessoaFisica cadastroPessoa) {
-        Scanner entrada = new Scanner(System.in);
-
         System.out.print("Digite seu nome: ");
-        nome = entrada.nextLine();
+        nome = CapturadorDeEntrada.nextLine();
         System.out.print("\nDigite seu endereço: ");
-        endereco = entrada.nextLine();
+        endereco = CapturadorDeEntrada.nextLine();
         System.out.print("\nDigite seu cpf (Somente números) com 11 dígitos: ");
-        cpf = entrada.next();
+        cpf = CapturadorDeEntrada.nextLine();
         System.out.print("\nEntre com a data de nascimento (dd/mm/yyyy): \n");
-        data = entrada.next();
+        data = CapturadorDeEntrada.nextLine();
         dataDeNascimento = TransformarDataDeNascimento(data);
         retorno = cadastroPessoa.cadastrarPessoa(nome, endereco, cpf, dataDeNascimento);
         if (retorno) {
@@ -145,20 +138,19 @@ public class Menu <T> {
     }
 
     public boolean alteracaoPessoaFisica(CadastroPessoaFisica cadastroPessoa) {
-        Scanner entrada = new Scanner(System.in);
         String cpfDigitado;
         System.out.print("Digite o CPF que deseja realizar alteracao: ");
-        cpfDigitado = entrada.nextLine();
+        cpfDigitado = CapturadorDeEntrada.nextLine();
         boolean existeCpf = cadastroPessoa.consultarSeCpfExiste(cpfDigitado);
         if (existeCpf) {
             System.out.print("Digite o nome atualizado: ");
-            nome = entrada.nextLine();
+            nome = CapturadorDeEntrada.nextLine();
             System.out.print("\nDigite o endereço atualizado: ");
-            endereco = entrada.nextLine();
+            endereco = CapturadorDeEntrada.nextLine();
             System.out.print("\nDigite o cpf atualizado (Somente números): ");
-            cpf = entrada.next();
+            cpf = CapturadorDeEntrada.nextLine();
             System.out.print("\nEntre com a data de nascimento atualizada (dd/mm/yyyy): \n");
-            data = entrada.next();
+            data = CapturadorDeEntrada.nextLine();
             dataDeNascimento = TransformarDataDeNascimento(data);
             retorno = cadastroPessoa.alterarPessoa(nome, endereco, cpf, dataDeNascimento);
             if (retorno) {
@@ -171,14 +163,12 @@ public class Menu <T> {
     }
 
     public boolean cadastroPessoaJuridica(CadastroPessoaJuridica cadastroEmpresa) {
-        Scanner entrada = new Scanner(System.in);
-
         System.out.print("Digite o nome da empresa: ");
-        nome = entrada.nextLine();
+        nome = CapturadorDeEntrada.nextLine();
         System.out.print("\nDigite o endereço da empresa: ");
-        endereco = entrada.nextLine();
+        endereco = CapturadorDeEntrada.nextLine();
         System.out.print("\nDigite o CNPJ da empresa (Somente números) com 14 dígitos: ");
-        cnpj = entrada.next();
+        cnpj = CapturadorDeEntrada.nextLine();
         retorno = cadastroEmpresa.cadastrarEmpresa(nome, endereco, cnpj);
         if (retorno) {
             return true;
@@ -189,18 +179,17 @@ public class Menu <T> {
     }
 
     public boolean alteracaoPessoaJuridica(CadastroPessoaJuridica cadastroPessoa) {
-        Scanner entrada = new Scanner(System.in);
         String cnpjDigitado;
         System.out.print("Digite o CNPJ que deseja realizar alteracao: ");
-        cnpjDigitado = entrada.nextLine();
+        cnpjDigitado = CapturadorDeEntrada.nextLine();
         boolean existeCnpj = cadastroPessoa.consultarSeCnpjExiste(cnpjDigitado);
         if (existeCnpj) {
             System.out.print("Digite o nome da empresa atualizado: ");
-            nome = entrada.nextLine();
+            nome = CapturadorDeEntrada.nextLine();
             System.out.print("\nDigite o endereço da empresa atualizado: ");
-            endereco = entrada.nextLine();
+            endereco = CapturadorDeEntrada.nextLine();
             System.out.print("\nDigite o cnpj da empresa atualizado (Somente números): ");
-            cnpj = entrada.next();
+            cnpj = CapturadorDeEntrada.nextLine();
             retorno = cadastroPessoa.alterarEmpresa(nome, endereco, cnpj);
             if (retorno) {
                 return true;
@@ -212,20 +201,16 @@ public class Menu <T> {
     }
 
     LocalDate TransformarDataDeNascimento(String input) {
-        try (Scanner scanner = new Scanner(input)) {
-            String dateString = scanner.next();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            return LocalDate.parse(dateString, formatter);
-        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return LocalDate.parse(input, formatter);
+
     }
 
     LocalDateTime TransformarDataDeAluguel() {
         System.out.println("Digite o dia e horario desejado (dd/MM/yyyy HH:mm:ss) :");
-        try (Scanner scanner = new Scanner(System.in)) {
-            String dateString = scanner.nextLine();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            return LocalDateTime.parse(dateString, formatter);
-        }
+        String dateString = CapturadorDeEntrada.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return LocalDateTime.parse(dateString, formatter);
     }
 
 }

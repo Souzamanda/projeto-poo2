@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 public class AluguelVeiculos <T>{
     int id;
     T tipoDePessoa;
-    T veiculo;
+    Vehicle veiculo;
     LocalDateTime dataDoAluguel;
     String local;
 
-    public AluguelVeiculos (int id, T tipoDePessoa, T veiculo, LocalDateTime dataDoAluguel, String local) {
+    public AluguelVeiculos (int id, T tipoDePessoa, Vehicle veiculo, LocalDateTime dataDoAluguel, String local) {
         this.id = id;
         this.tipoDePessoa = tipoDePessoa;
         this.veiculo = veiculo;
@@ -34,11 +34,11 @@ public class AluguelVeiculos <T>{
         this.tipoDePessoa = tipoDePessoa;
     }
 
-    public T getVeiculo() {
+    public Vehicle getVeiculo() {
         return veiculo;
     }
 
-    public void setVeiculo(T veiculo) {
+    public void setVeiculo(Vehicle veiculo) {
         this.veiculo = veiculo;
     }
 
@@ -64,7 +64,7 @@ public class AluguelVeiculos <T>{
                 "tipoDePessoa=" + tipoDePessoa +
                 ", veiculo=" + veiculo +
                 ", dataDoAluguel=" + dataDoAluguel +
-                ", local='" + local + '\'' +
+                ", local='" + local +
                 '}';
     }
     //usar linha abaixo para chegar na diferença de horas na devolução

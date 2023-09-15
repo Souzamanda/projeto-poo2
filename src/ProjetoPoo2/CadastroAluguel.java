@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class CadastroAluguel <T> extends  AluguelVeiculosRepositorio {
 
-    public boolean alugarVeiculo (int id, T pessoa, T veiculo,  LocalDateTime data, String local){
+    public boolean alugarVeiculo (int id, T pessoa, Vehicle veiculo,  LocalDateTime data, String local){
             AluguelVeiculos aluguel = new AluguelVeiculos<>(id,pessoa,veiculo,data,local);
             aluguelVeiculos.add(aluguel);
             return true;
